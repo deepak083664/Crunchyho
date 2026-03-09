@@ -150,8 +150,10 @@ export function ShopProvider({ children }) {
     // Helper to resolve product image URL
     const resolveImageUrl = (img) => {
         if (!img) return '/images/sample.jpg';
-        if (img.startsWith('/uploads')) {
-            return `${import.meta.env.VITE_API_URL}${img}`;
+        const API_URL = import.meta.env.VITE_API_URL;
+        if (img.startsWith('/uploads') || img.startsWith('uploads/')) {
+            const path = img.startsWith('/') ? img : `/${img}`;
+            return `${API_URL}${path}`;
         }
         return img;
     };
