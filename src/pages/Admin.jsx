@@ -437,7 +437,8 @@ function OrdersManagement() {
             try {
                 const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`);
                 const data = await res.json();
-                setOrders(data);
+                // Reverse the array to show the newest orders first
+                setOrders(data.reverse());
             } catch (error) {
                 console.error("Failed to fetch orders", error);
             }
