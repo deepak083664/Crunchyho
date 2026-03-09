@@ -43,7 +43,7 @@ export default function Checkout() {
 
     const placeOrderBackend = async (orderData) => {
         try {
-            const res = await fetch('/api/orders', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
@@ -84,7 +84,7 @@ export default function Checkout() {
         } else if (paymentMethod === 'Razorpay') {
             try {
                 // Create Razorpay Order first
-                const rzOrderRes = await fetch('/api/payment/create-order', {
+                const rzOrderRes = await fetch(`${import.meta.env.VITE_API_URL}/api/payment/create-order`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ amount: cartTotal, receipt: `rcpt_${Date.now()}` })
@@ -99,7 +99,7 @@ export default function Checkout() {
                     description: "Premium Purchase",
                     order_id: rzOrder.id,
                     handler: async function (response) {
-                        const verifyRes = await fetch('/api/payment/verify', {
+                        const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/api/payment/verify`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({

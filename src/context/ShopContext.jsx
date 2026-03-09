@@ -26,7 +26,7 @@ export function ShopProvider({ children }) {
         // Fetch products from backend
         const fetchProducts = async () => {
             try {
-                const res = await fetch('/api/products');
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products`);
                 const data = await res.json();
                 setProducts(data);
             } catch (error) {
@@ -85,7 +85,7 @@ export function ShopProvider({ children }) {
     const addProduct = async (formData) => {
         try {
             const token = localStorage.getItem('adminToken');
-            const res = await fetch('/api/admin/product/add', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/product/add`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -107,7 +107,7 @@ export function ShopProvider({ children }) {
     const deleteProduct = async (id) => {
         try {
             const token = localStorage.getItem('adminToken');
-            const res = await fetch(`/api/admin/product/delete/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/product/delete/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -127,7 +127,7 @@ export function ShopProvider({ children }) {
     const updateProduct = async (id, formData) => {
         try {
             const token = localStorage.getItem('adminToken');
-            const res = await fetch(`/api/admin/product/update/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/product/update/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -151,7 +151,7 @@ export function ShopProvider({ children }) {
     const resolveImageUrl = (img) => {
         if (!img) return '/images/sample.jpg';
         if (img.startsWith('/uploads')) {
-            return `http://localhost:5000${img}`;
+            return `${import.meta.env.VITE_API_URL}${img}`;
         }
         return img;
     };

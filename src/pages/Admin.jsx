@@ -15,7 +15,7 @@ function AdminLogin({ onLogin }) {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch('/api/admin/login', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: 'admin@crunchyho.com', password })
@@ -149,14 +149,14 @@ function DashboardOverview() {
         const fetchData = async () => {
             try {
                 // Fetch orders
-                const ordersRes = await fetch('/api/orders');
+                const ordersRes = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`);
                 const ordersData = await ordersRes.json();
                 setOrders(ordersData);
 
                 // Fetch total users if admin token is present
                 const token = localStorage.getItem('adminToken');
                 if (token) {
-                    const usersRes = await fetch('/api/admin/users', {
+                    const usersRes = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     const usersData = await usersRes.json();
@@ -198,7 +198,7 @@ function DashboardOverview() {
 const resolveImageUrl = (img) => {
     if (!img) return '/images/sample.jpg';
     if (img.startsWith('/uploads')) {
-        return `http://localhost:5000${img}`;
+        return `${import.meta.env.VITE_API_URL}${img}`;
     }
     return img;
 };
@@ -433,7 +433,7 @@ function OrdersManagement() {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const res = await fetch('/api/orders');
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`);
                 const data = await res.json();
                 setOrders(data);
             } catch (error) {
@@ -445,7 +445,7 @@ function OrdersManagement() {
 
     const updateStatus = async (id, newStatus) => {
         try {
-            const response = await fetch(`/api/orders/${id}/status`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${id}/status`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: newStatus })
@@ -591,7 +591,7 @@ function UsersManagement() {
         const fetchUsers = async () => {
             try {
                 const token = localStorage.getItem('adminToken');
-                const res = await fetch('/api/admin/users', {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const data = await res.json();
