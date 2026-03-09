@@ -17,6 +17,9 @@ import RefundPolicy from './pages/RefundPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import OrderSuccess from './pages/OrderSuccess';
+import WhatsAppFloat from './components/WhatsAppFloat';
+import CustomerReviews from './components/CustomerReviews';
+import MiddleBanner from './components/MiddleBanner';
 import './App.css';
 
 function ScrollToTop() {
@@ -53,7 +56,10 @@ function LayoutManager({ children, toggleMenu, isMenuOpen }) {
         {children}
       </main>
 
+      <MiddleBanner />
+      <CustomerReviews />
       <Footer />
+      <WhatsAppFloat />
     </div>
   );
 }
