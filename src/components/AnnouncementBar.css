@@ -1,0 +1,65 @@
+.announcement-wrapper {
+    background: linear-gradient(90deg, #b48545 0%, #d4ae6e 50%, #b48545 100%);
+    color: white;
+    padding: 8px 0;
+    margin-top: 70px;
+    /* Offset for new 70px desktop navbar */
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 40;
+    /* Below navbar (50) but above content */
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.announcement-marquee {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 25s linear infinite;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    align-items: center;
+}
+
+.announcement-marquee span {
+    padding: 0 15px;
+}
+
+.announcement-marquee .separator {
+    color: rgba(194, 221, 186, 0.5);
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* Pause animation on hover */
+.announcement-wrapper:hover .announcement-marquee {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+        /* Needs enough duplicate content to weave seamlessly */
+    }
+}
+
+@media (max-width: 768px) {
+    .announcement-wrapper {
+        padding: 6px 0;
+        margin-top: 50px;
+        /* Offset for new 50px mobile navbar */
+    }
+
+    .announcement-marquee {
+        font-size: 0.8rem;
+        animation-duration: 20s;
+    }
+}

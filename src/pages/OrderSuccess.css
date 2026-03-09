@@ -1,0 +1,444 @@
+.order-success-page {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1rem;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.os-container {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.relative-z {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Header Section */
+.os-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    color: #16a34a;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 1.5rem auto;
+    box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.3);
+    animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.success-icon svg {
+    width: 40px;
+    height: 40px;
+}
+
+.os-title {
+    font-family: 'Outfit', 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.os-subtitle {
+    font-size: 1.1rem;
+    color: #475569;
+}
+
+/* Bill/Invoice Card UI */
+.bill-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.05),
+        0 10px 10px -5px rgba(0, 0, 0, 0.02),
+        0 0 0 1px rgba(15, 23, 42, 0.05);
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+    border-top: 6px solid #0f172a;
+}
+
+.bill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed #e2e8f0;
+    margin-bottom: 2rem;
+}
+
+.bill-brand h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -1px;
+    margin-bottom: 0.2rem;
+}
+
+.bill-brand p {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bill-meta {
+    text-align: right;
+}
+
+.bill-meta h3 {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.bill-id {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.bill-date {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+}
+
+.bill-customer-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.bill-info-block h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+}
+
+.bill-info-block p {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.bill-info-block .info-name {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.bill-items-section {
+    margin-bottom: 2rem;
+}
+
+.bill-items-section h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.bill-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bill-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-details {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.item-name {
+    font-weight: 500;
+    color: #334155;
+    font-size: 1rem;
+}
+
+.item-qty {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.item-price {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.bill-footer {
+    padding-top: 1.5rem;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.bill-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-gray {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.badge-green {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.bill-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #f1f5f9;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.total-amount-val {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -1px;
+}
+
+.bill-thankyou {
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    text-align: center;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.bill-thankyou .small-text {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+}
+
+/* Actions */
+.os-actions {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+}
+
+.os-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.os-btn .icon {
+    width: 20px;
+    height: 20px;
+}
+
+.os-btn-primary {
+    background-color: #0f172a;
+    color: white;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.os-btn-primary:hover {
+    background-color: #1e293b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(15, 23, 42, 0.3);
+}
+
+.group-hover-anim {
+    transition: transform 0.2s ease;
+}
+
+.os-btn-primary:hover .group-hover-anim {
+    transform: translateY(-2px);
+}
+
+.os-btn-secondary {
+    background-color: white;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.os-btn-secondary:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.os-btn:active {
+    transform: scale(0.98);
+}
+
+/* Ensure bill looks good specifically when downloaded via html2canvas */
+.bill-card.pdf-render-mode {
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    border-top: 6px solid #0f172a;
+    padding: 3rem;
+    max-width: none;
+}
+
+.pdf-render-mode .bill-thankyou {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+}
+
+/* Responsive Design for Mobile Details */
+@media (max-width: 640px) {
+    .order-success-page {
+        padding: 2rem 1rem;
+    }
+
+    .os-title {
+        font-size: 2rem;
+    }
+
+    .success-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .success-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .bill-card {
+        padding: 1.5rem;
+    }
+
+    .bill-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .bill-meta {
+        text-align: left;
+    }
+
+    .bill-customer-info {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .bill-info-block.text-right {
+        text-align: left;
+    }
+
+    .os-actions {
+        flex-direction: column;
+    }
+
+    .os-btn {
+        width: 100%;
+    }
+}

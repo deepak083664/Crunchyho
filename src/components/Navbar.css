@@ -1,0 +1,169 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(253, 252, 251, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    transition: all var(--transition-normal);
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    /* Reduced to 50px for sleeker mobile UI */
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-center {
+    display: none;
+    /* Hidden by default on mobile */
+    gap: 1.5rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-link {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--text-primary);
+    transition: width var(--transition-fast);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.logo {
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #7f1d1d 0%, #ef4444 50%, #f87171 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0px 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.logo-img {
+    height: 50px;
+    object-fit: contain;
+}
+
+.nav-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    background: transparent;
+}
+
+.nav-icon:hover {
+    background: var(--bg-color);
+    transform: scale(1.05);
+}
+
+.nav-icon:active {
+    transform: scale(0.95);
+}
+
+.badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: var(--primary-btn);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounceScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounceScale {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+@media (min-width: 768px) {
+    .navbar-content {
+        height: 70px;
+        /* Reduced from 90px */
+    }
+
+
+    .nav-left,
+    .nav-center,
+    .nav-right {
+        gap: 1rem;
+    }
+
+    .nav-center {
+        display: flex;
+        /* Show nav links on desktop */
+    }
+
+    .hamburger {
+        display: none;
+        /* Hide hamburger menu on desktop */
+    }
+
+    .logo-img {
+        height: 55px;
+    }
+}

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Navigation Bar</title>
+    <style>
+        /* CSS Variables for Futuristic/Modern Theme */
+        :root {
+            --bg-color: #0b0f19;
+            /* Deep futuristic background */
+            --nav-bg: rgba(11, 15, 25, 0.7);
+            /* Glassmorphism */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            /* Neon blue accent */
+            --overlay-color: rgba(0, 0, 0, 0.6);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            /* Placeholder background to show glass effect */
+            background-image: radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.1), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.1), transparent 25%);
+        }
+
+        /* Navbar Base */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Desktop Navigation Items */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color var(--transition-speed) ease;
+        }
+
+        /* Hover Animation (Underline growth) */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width var(--transition-speed) ease;
+            box-shadow: 0 0 10px var(--accent-color);
+            /* Futuristic glow */
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger Icon (Hidden on Desktop) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 30px;
+            height: 20px;
+            position: relative;
+            z-index: 1001;
+            /* Keep above mobile menu */
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-primary);
+            position: absolute;
+            left: 0;
+            transition: all var(--transition-speed) ease;
+            border-radius: 2px;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 9px;
+        }
+
+        .hamburger span:nth-child(3) {
+            top: 18px;
+        }
+
+        /* Hamburger Animation to 'X' */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Overlay for Mobile Menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--overlay-color);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 998;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Page Content Spacer */
+        .content {
+            padding: 120px 5% 0;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        /* --- RESPONSIVE MOBILE/TABLET DESIGN --- */
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                /* Start hidden off-screen */
+                width: 75%;
+                max-width: 350px;
+                height: 100vh;
+                background: rgba(15, 23, 42, 0.95);
+                /* Solid dark glass */
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                z-index: 999;
+                transition: right 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+                /* Smooth slide */
+                border-left: 1px solid rgba(255, 255, 255, 0.05);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-links.active {
+                right: 0;
+                /* Slide in */
+            }
+
+            .nav-link {
+                font-size: 1.5rem;
+                padding: 1rem;
+                display: block;
+                width: 100%;
+                text-align: center;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+            }
+
+            /* Sequence animation for links */
+            .nav-links.active .nav-link {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links.active li:nth-child(1) .nav-link {
+                transition-delay: 0.1s;
+            }
+
+            .nav-links.active li:nth-child(2) .nav-link {
+                transition-delay: 0.2s;
+            }
+
+            .nav-links.active li:nth-child(3) .nav-link {
+                transition-delay: 0.3s;
+            }
+
+            .nav-links.active li:nth-child(4) .nav-link {
+                transition-delay: 0.4s;
+            }
+
+            .nav-link::after {
+                display: none;
+                /* Remove underline effect on mobile */
+            }
+
+            .nav-link:hover {
+                color: var(--accent-color);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Transparent Overlay for Mobile Menu -->
+    <div class="overlay" id="overlay"></div>
+
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">Nexus<span>.</span></a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" class="nav-link">Home</a></li>
+            <li><a href="#" class="nav-link">Menu</a></li>
+            <li><a href="#" class="nav-link">About</a></li>
+            <li><a href="#" class="nav-link">Contact</a></li>
+        </ul>
+
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <div class="content">
+        <h1>Welcome to Nexus</h1>
+        <p>This is a demonstration of a fully responsive, vanilla HTML/CSS/JS navigation bar. Resize your browser window
+            to see the mobile menu slide cleanly from the right side.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            const overlay = document.getElementById('overlay');
+            const links = document.querySelectorAll('.nav-link');
+            const navbar = document.getElementById('navbar');
+
+            // Function to toggle menu
+            const toggleMenu = () => {
+                const isActive = navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                overlay.classList.toggle('active');
+
+                // Prevent background scrolling when menu is open
+                document.body.style.overflow = isActive ? 'hidden' : '';
+            };
+
+            // Event Listeners
+            hamburger.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking on overlay
+            overlay.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+
+            // Close menu when clicking a link
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Handle resize events to prevent menu from staying stuck open if resized to desktop
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Adding a simple scroll effect to the navbar
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(11, 15, 25, 0.9)';
+                    navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.5)';
+                } else {
+                    navbar.style.background = 'rgba(11, 15, 25, 0.7)';
+                    navbar.style.boxShadow = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
