@@ -447,4 +447,64 @@
     .os-btn {
         width: 100%;
     }
+
+    /* Further mobile adjustments for the bill card specifically */
+    .bill-brand h2 {
+        font-size: 1.4rem;
+    }
+
+    .bill-meta h3 {
+        font-size: 0.65rem;
+    }
+
+    .bill-id {
+        font-size: 0.85rem;
+    }
+
+    .bill-info-block h4 {
+        font-size: 0.65rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .bill-info-block p {
+        font-size: 0.8rem;
+    }
+
+    .bill-items-section h4 {
+        font-size: 0.65rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .item-name {
+        font-size: 0.85rem;
+    }
+
+    .item-qty,
+    .item-price {
+        font-size: 0.8rem;
+    }
+
+    .bill-summary-row {
+        font-size: 0.85rem;
+    }
+
+    .bill-total-row {
+        font-size: 0.95rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .total-amount-val {
+        font-size: 1.3rem;
+    }
+
+    .bill-thankyou {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .bill-thankyou .small-text {
+        font-size: 0.7rem;
+    }
 }
