@@ -807,6 +807,33 @@
         flex: 1;
         justify-content: center;
     }
+
+    /* Prevent modal tables from breaking into huge cards on mobile */
+    .admin-modal-body .admin-table,
+    .admin-modal-body .admin-table tbody,
+    .admin-modal-body .admin-table tr {
+        display: block; /* We can use block for row, or keep table-row */
+    }
+
+    .admin-modal-body .admin-table thead {
+        display: none; /* Still hide headers since it's compact */
+    }
+
+    .admin-modal-body .admin-table tr {
+        margin-bottom: 0.8rem;
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .admin-modal-body .admin-table td {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+        border-bottom: 1px dotted #e2e8f0;
+    }
+    
+    .admin-modal-body .admin-table td:last-child {
+        border-bottom: none;
+    }
 }
 
 @media (max-width: 480px) {

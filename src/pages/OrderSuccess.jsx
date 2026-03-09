@@ -46,10 +46,15 @@ export default function OrderSuccess() {
             // Temporarily add a class for PDF rendering
             billRef.current.classList.add('pdf-render-mode');
 
+            // Small delay to allow CSS changes to propagate before capturing
+            await new Promise(resolve => setTimeout(resolve, 100));
+
             const canvas = await html2canvas(billRef.current, {
                 scale: 2, // Higher resolution
                 useCORS: true,
-                backgroundColor: '#ffffff'
+                backgroundColor: '#ffffff',
+                scrollY: -window.scrollY,
+                windowWidth: document.documentElement.offsetWidth
             });
 
             billRef.current.classList.remove('pdf-render-mode');
@@ -160,7 +165,7 @@ export default function OrderSuccess() {
 
                     <div className="bill-thankyou">
                         <p>Thank you for shopping with CrunchyHo!</p>
-                        <p className="small-text">For support, contact support@crunchyho.com</p>
+                        <p className="small-text">For support, contact Crunchyho8@gmail.com</p>
                     </div>
                 </div>
 

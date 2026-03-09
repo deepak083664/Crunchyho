@@ -384,7 +384,13 @@
     border: none;
     border-top: 6px solid #0f172a;
     padding: 3rem;
-    max-width: none;
+    max-width: 800px;
+    width: 800px !important;
+    /* Force desktop layout during PDF render */
+    margin: 0 !important;
+    transform: none !important;
+    animation: none !important;
+    opacity: 1 !important;
 }
 
 .pdf-render-mode .bill-thankyou {

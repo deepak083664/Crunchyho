@@ -481,59 +481,62 @@ function OrdersManagement() {
             {selectedOrder && (
                 <div className="admin-modal-overlay">
                     <div className="admin-modal">
-                        <h3>Order Details</h3>
-                        <div className="admin-form">
-                            <div className="mb-3">
-                                <strong>Order ID:</strong> <span className="text-muted">{selectedOrder._id}</span>
-                            </div>
-                            <div className="mb-3" style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                                <strong style={{ color: '#0f172a' }}>Customer Information</strong>
-                                <div className="mt-2 text-sm text-muted" style={{ lineHeight: '1.6' }}>
-                                    <p><strong>Name:</strong> {selectedOrder.user.fullName}</p>
-                                    <p><strong>Phone:</strong> {selectedOrder.user.phone}</p>
-                                    <p><strong>Address:</strong> {selectedOrder.user.address}, {selectedOrder.user.city}, {selectedOrder.user.state} - {selectedOrder.user.pincode}</p>
+                        <div className="admin-modal-header">
+                            <h3>Order Details</h3>
+                        </div>
+                        <div className="admin-modal-body">
+                            <div className="admin-form">
+                                <div className="mb-3">
+                                    <strong>Order ID:</strong> <span className="text-muted">{selectedOrder._id}</span>
                                 </div>
-                            </div>
+                                <div className="mb-3" style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                                    <strong style={{ color: '#0f172a' }}>Customer Information</strong>
+                                    <div className="mt-2 text-sm text-muted" style={{ lineHeight: '1.6' }}>
+                                        <p><strong>Name:</strong> {selectedOrder.user.fullName}</p>
+                                        <p><strong>Phone:</strong> {selectedOrder.user.phone}</p>
+                                        <p><strong>Address:</strong> {selectedOrder.user.address}, {selectedOrder.user.city}, {selectedOrder.user.state} - {selectedOrder.user.pincode}</p>
+                                    </div>
+                                </div>
 
-                            <div className="mb-3">
-                                <strong style={{ color: '#0f172a' }}>Order Items</strong>
-                                <div className="table-responsive mt-2">
-                                    <table className="admin-table" style={{ fontSize: '0.85rem' }}>
-                                        <thead>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Qty</th>
-                                                <th>Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {selectedOrder.orderItems.map((item, idx) => (
-                                                <tr key={idx}>
-                                                    <td data-label="Item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                        <img src={resolveImageUrl(item.image)} alt={item.name} style={{ width: '36px', height: '36px', objectFit: 'cover', borderRadius: '6px' }} />
-                                                        <span>{item.name}</span>
-                                                    </td>
-                                                    <td data-label="Qty">x{item.qty}</td>
-                                                    <td data-label="Price">₹{item.price.toFixed(2)}</td>
+                                <div className="mb-3">
+                                    <strong style={{ color: '#0f172a' }}>Order Items</strong>
+                                    <div className="table-responsive mt-2">
+                                        <table className="admin-table" style={{ fontSize: '0.85rem' }}>
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Qty</th>
+                                                    <th>Price</th>
                                                 </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                {selectedOrder.orderItems.map((item, idx) => (
+                                                    <tr key={idx}>
+                                                        <td data-label="Item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                                            <img src={resolveImageUrl(item.image)} alt={item.name} style={{ width: '36px', height: '36px', objectFit: 'cover', borderRadius: '6px' }} />
+                                                            <span>{item.name}</span>
+                                                        </td>
+                                                        <td data-label="Qty">x{item.qty}</td>
+                                                        <td data-label="Price">₹{item.price.toFixed(2)}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div className="d-flex justify-between aligns-center mb-2 mt-4">
+                                    <span className="text-muted">Payment Method:</span>
+                                    <strong>{selectedOrder.paymentMethod}</strong>
+                                </div>
+                                <div className="d-flex justify-between aligns-center mb-4">
+                                    <span className="text-muted">Total Amount:</span>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a' }}>₹{selectedOrder.totalAmount.toFixed(2)}</span>
                                 </div>
                             </div>
-
-                            <div className="d-flex justify-between aligns-center mb-2 mt-4">
-                                <span className="text-muted">Payment Method:</span>
-                                <strong>{selectedOrder.paymentMethod}</strong>
-                            </div>
-                            <div className="d-flex justify-between aligns-center mb-4">
-                                <span className="text-muted">Total Amount:</span>
-                                <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#0f172a' }}>₹{selectedOrder.totalAmount.toFixed(2)}</span>
-                            </div>
-
-                            <div className="d-flex justify-end mt-4 w-full">
-                                <button type="button" className="btn-secondary w-full" onClick={() => setSelectedOrder(null)}>Close</button>
-                            </div>
+                        </div>
+                        <div className="admin-modal-footer">
+                            <button type="button" className="btn-secondary w-full" onClick={() => setSelectedOrder(null)}>Close</button>
                         </div>
                     </div>
                 </div>
