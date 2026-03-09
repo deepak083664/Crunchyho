@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ShopProvider, ShopContext } from './context/ShopContext';
 import Navbar from './components/Navbar';
@@ -18,6 +18,16 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import OrderSuccess from './pages/OrderSuccess';
 import './App.css';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 // Component to conditionally render Navbar and Footer based on route
 function LayoutManager({ children, toggleMenu, isMenuOpen }) {
@@ -57,6 +67,7 @@ function AppContent() {
 
   return (
     <Router>
+      <ScrollToTop />
       <LayoutManager toggleMenu={toggleMenu} isMenuOpen={isMenuOpen}>
         <Routes>
           <Route path="/" element={<Home />} />
