@@ -259,9 +259,9 @@
         margin-bottom: 0.2rem;
     }
 
-    /* Hide description on mobile to save space and show price reliably */
+    /* We are no longer hiding the description on mobile, but we will make it smaller to save space */
     .product-desc {
-        display: none;
+        font-size: 0.75rem;
     }
 
     .product-price {

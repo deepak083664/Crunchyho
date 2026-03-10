@@ -382,20 +382,112 @@
     border-radius: 0;
     box-shadow: none;
     border: none;
-    border-top: 6px solid #0f172a;
-    padding: 3rem;
-    max-width: 800px;
-    width: 800px !important;
+    border-top: 8px solid #0f172a;
+    padding: 2rem;
+    max-width: 600px;
+    width: 600px !important;
     /* Force desktop layout during PDF render */
-    margin: 0 !important;
+    margin: 0 auto !important;
     transform: none !important;
     animation: none !important;
     opacity: 1 !important;
+    background: #ffffff;
+    color: #000000;
+}
+
+.pdf-render-mode * {
+    /* Use a cleaner font for the PDF */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
+
+.pdf-render-mode .bill-brand h2 {
+    font-size: 1.5rem;
+    color: #0f172a;
+}
+
+.pdf-render-mode .bill-meta h3 {
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+.pdf-render-mode .bill-id {
+    font-size: 0.95rem;
+    color: #0f172a;
+}
+
+.pdf-render-mode .bill-date {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.pdf-render-mode .bill-info-block h4 {
+    font-size: 0.8rem;
+    color: #475569;
+    margin-bottom: 0.4rem;
+}
+
+.pdf-render-mode .bill-info-block p {
+    font-size: 0.9rem;
+    color: #1e293b;
+    margin: 0.2rem 0;
+}
+
+.pdf-render-mode .bill-items-section h4 {
+    font-size: 0.85rem;
+    color: #0f172a;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 0.8rem;
+}
+
+.pdf-render-mode .item-name {
+    font-size: 1rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.pdf-render-mode .item-qty {
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.pdf-render-mode .item-price {
+    font-size: 1rem;
+    color: #0f172a;
+}
+
+.pdf-render-mode .bill-item {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.pdf-render-mode .bill-footer {
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.pdf-render-mode .bill-summary-row {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.pdf-render-mode .bill-total-row {
+    font-size: 1.2rem;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 2px solid #e2e8f0;
+}
+
+.pdf-render-mode .total-amount-val {
+    font-size: 1.5rem;
 }
 
 .pdf-render-mode .bill-thankyou {
-    background: transparent;
+    background: #f8fafc;
     border: 1px solid #e2e8f0;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
 }
 
 /* Responsive Design for Mobile Details */
