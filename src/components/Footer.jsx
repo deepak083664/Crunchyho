@@ -9,10 +9,10 @@ export default function Footer() {
                 <div className="footer-grid">
                     <div className="footer-brand">
                         <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', textDecoration: 'none' }}>
-                            <img src="/logo1.jpeg" alt="CrunchyHo" style={{ height: '40px', objectFit: 'contain' }} />
-                            <span className="logo-text">CrunchyHo</span>
+                            <img src="/logo1.jpeg" alt="Crunchyho" style={{ height: '40px', objectFit: 'contain' }} />
+                            <span className="logo-text">Crunchyho</span>
                         </Link>
-                        <p className="text-muted">A delicious and addictive snack – once you start eating CrunchyHo, it’s hard to stop.</p>
+                        <p className="text-muted">A delicious and addictive snack – once you start eating Crunchyho, it’s hard to stop.</p>
                         <div className="social-links">
                             <a href="#" aria-label="Facebook"><Facebook size={20} /></a>
                             <a href="#" aria-label="Twitter"><Twitter size={20} /></a>
@@ -46,7 +46,7 @@ export default function Footer() {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} CrunchyHo All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Crunchyho All rights reserved.</p>
                     <p className="powered-by">
                         powered by <a href="https://launchliftx.com/" target="_blank" rel="noopener noreferrer" className="launchlift-link">LaunchLiftx</a>
                     </p>

@@ -6,7 +6,7 @@ import './HeroSlider.css';
 const slides = [
     {
         id: 1,
-        title: "New Arrivals",
+        title: "Welcome to Crunchyho",
         subtitle: "Discover our latest premium products.",
         image: "/slide1.jpeg",
         cta: "Shop Now"

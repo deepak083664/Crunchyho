@@ -9,8 +9,8 @@ export default function Navbar({ toggleMenu, cartCount, wishlistCount }) {
       <div className="navbar-content" style={{ padding: '0 1rem', width: '100%' }}>
         <div className="nav-left">
           <Link to="/" className="logo">
-            <img src="/logo1.jpeg" alt="CrunchyHo" className="logo-img" />
-            <span className="logo-text">CrunchyHo</span>
+            <img src="/logo1.jpeg" alt="Crunchyho" className="logo-img" />
+            <span className="logo-text">Crunchyho</span>
           </Link>
         </div>
 
