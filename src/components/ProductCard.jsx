@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Heart, Star, Eye } from 'lucide-react';
 import { ShopContext } from '../context/ShopContext';
@@ -7,6 +7,10 @@ import './ProductCard.css';
 const ProductCard = ({ product }) => {
     const { addToCart, toggleWishlist, wishlist, resolveImageUrl } = useContext(ShopContext);
     const isWishlisted = wishlist.some(item => (item._id || item.id) === (product._id || product.id));
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const description = product.description || '';
+    const shouldTruncate = description.length > 50;
 
     return (
         <div className="product-card group">
@@ -29,7 +33,23 @@ const ProductCard = ({ product }) => {
                 </div>
 
                 <h3 className="product-name">{product.name}</h3>
-                <p className="product-desc">{product.description}</p>
+                <div className="product-desc-container">
+                    <p className={`product-desc ${isExpanded ? 'expanded' : ''}`}>
+                        {description}
+                    </p>
+                    {shouldTruncate && (
+                        <button 
+                            className="see-more-btn"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setIsExpanded(!isExpanded);
+                            }}
+                        >
+                            {isExpanded ? '...see less' : '...see more'}
+                        </button>
+                    )}
+                </div>
 
                 <div className="product-price-container">
                     <span className="product-price-original">
