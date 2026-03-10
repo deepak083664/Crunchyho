@@ -3,6 +3,8 @@ import Product from '../models/Product.js';
 
 const router = express.Router();
 
+import upload from '../middleware/upload.js';
+
 // @desc    Fetch all products
 // @route   GET /api/products
 router.get('/', async (req, res) => {
@@ -16,15 +18,20 @@ router.get('/', async (req, res) => {
 
 // @desc    Create a product
 // @route   POST /api/products
-router.post('/', async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
     try {
-        const { name, price, description, image, category } = req.body;
+        const { name, price, description, category } = req.body;
+
+        let imageUrl = req.body.image || '/images/sample.jpg';
+        if (req.file) {
+            imageUrl = req.file.path;
+        }
 
         const product = new Product({
             name: name || 'Sample name',
             price: price || 0,
             description: description || 'Sample description',
-            image: image || '/images/sample.jpg',
+            image: imageUrl,
             category: category || 'Sample category',
         });
 
@@ -54,17 +61,22 @@ router.delete('/:id', async (req, res) => {
 
 // @desc    Update a product
 // @route   PUT /api/products/:id
-router.put('/:id', async (req, res) => {
+router.put('/:id', upload.single('image'), async (req, res) => {
     try {
-        const { name, price, description, image, category } = req.body;
+        const { name, price, description, category } = req.body;
         const product = await Product.findById(req.params.id);
 
         if (product) {
             product.name = name || product.name;
             product.price = price || product.price;
             product.description = description || product.description;
-            product.image = image || product.image;
             product.category = category || product.category;
+
+            if (req.file) {
+                product.image = req.file.path;
+            } else if (req.body.image) {
+                product.image = req.body.image;
+            }
 
             const updatedProduct = await product.save();
             res.json(updatedProduct);

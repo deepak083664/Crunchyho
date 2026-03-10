@@ -1,10 +1,9 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import multer from 'multer';
-import path from 'path';
 import User from '../models/User.js';
 import Product from '../models/Product.js';
 import { protectAdmin } from '../middleware/adminAuth.js';
+import upload from '../middleware/upload.js';
 
 const router = express.Router();
 
@@ -57,35 +56,6 @@ router.get('/users', protectAdmin, async (req, res) => {
     }
 });
 
-// --- MULTER CONFIGURATION FOR IMAGE UPLOADS ---
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename(req, file, cb) {
-        cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-    }
-});
-
-function checkFileType(file, cb) {
-    const filetypes = /jpg|jpeg|png|webp|gif/;
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = filetypes.test(file.mimetype);
-
-    if (extname && mimetype) {
-        return cb(null, true);
-    } else {
-        cb('Images only!');
-    }
-}
-
-const upload = multer({
-    storage,
-    fileFilter: function (req, file, cb) {
-        checkFileType(file, cb);
-    }
-});
-
 // @route   POST /api/admin/product/add
 // @desc    Create a new product with image upload
 // @access  Private/Admin
@@ -95,7 +65,8 @@ router.post('/product/add', protectAdmin, upload.single('image'), async (req, re
 
         let imageUrl = '';
         if (req.file) {
-            imageUrl = `/${req.file.path.replace(/\\/g, '/')}`; // Normalize slashes for windows
+            // Updated to use req.file.path directly for Cloudinary URL
+            imageUrl = req.file.path;
         } else if (req.body.image) {
             imageUrl = req.body.image; // Fallback to URL string if sent via form
         }
@@ -134,7 +105,8 @@ router.put('/product/update/:id', protectAdmin, upload.single('image'), async (r
             product.rating = rating !== undefined ? Number(rating) : product.rating;
 
             if (req.file) {
-                product.image = `/${req.file.path.replace(/\\/g, '/')}`;
+                // Updated to use req.file.path directly for Cloudinary URL
+                product.image = req.file.path;
             } else if (req.body.image && req.body.image !== 'undefined') {
                 product.image = req.body.image;
             }
