@@ -18,7 +18,7 @@ const createAdmin = async () => {
         const adminUser = new User({
             fullName: 'Bipul Admin',
             email: 'admin@crunchyho.com',
-            password: 'admin123',
+            password: 'bipul123@',
             role: 'admin'
         });
 

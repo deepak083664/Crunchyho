@@ -9,8 +9,9 @@ import { protectAdmin } from '../middleware/adminAuth.js';
 const router = express.Router();
 
 // Generate JWT
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET || 'fallback_secret', {
+const generateToken = (id, password) => {
+    // Include password hash in the token so that when password changes, old tokens are invalidated
+    return jwt.sign({ id, pHash: password.substring(0, 10) }, process.env.JWT_SECRET || 'fallback_secret', {
         expiresIn: '30d',
     });
 };
@@ -34,7 +35,7 @@ router.post('/login', async (req, res) => {
                 fullName: user.fullName,
                 email: user.email,
                 role: user.role,
-                token: generateToken(user._id),
+                token: generateToken(user._id, user.password),
             });
         } else {
             res.status(401).json({ message: 'Invalid email or password' });

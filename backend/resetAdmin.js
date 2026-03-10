@@ -21,7 +21,7 @@ const resetAdmin = async () => {
         adminUser = new User({
             fullName: 'Bipul Admin',
             email: 'admin@crunchyho.com',
-            password: 'adminpassword123',
+            password: 'bipul123@',
             role: 'admin'
         });
 
