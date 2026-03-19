@@ -7,10 +7,25 @@ import Order from '../models/Order.js';
 const router = express.Router();
 
 // Initialize Cashfree
+const mode = process.env.CASHFREE_MODE || 'SANDBOX';
+const appId = process.env.CASHFREE_APP_ID;
+const secretKey = process.env.CASHFREE_SECRET_KEY;
+
+// Diagnostic Log (Masked)
+console.log("--- Cashfree Diagnostics ---");
+console.log("Mode:", mode);
+console.log("App ID:", appId ? `${appId.substring(0, 4)}...${appId.substring(appId.length - 4)}` : "MISSING");
+console.log("Secret Key:", secretKey ? `${secretKey.substring(0, 8)}...` : "MISSING");
+console.log("---------------------------");
+
+if (!appId || !secretKey) {
+    console.error("CRITICAL: Cashfree Credentials missing in .env!");
+}
+
 const cashfree = new Cashfree(
-    process.env.CASHFREE_MODE === 'PRODUCTION' ? CFEnvironment.PRODUCTION : CFEnvironment.SANDBOX,
-    process.env.CASHFREE_APP_ID,
-    process.env.CASHFREE_SECRET_KEY
+    mode === 'PRODUCTION' ? CFEnvironment.PRODUCTION : CFEnvironment.SANDBOX,
+    appId,
+    secretKey
 );
 
 // @desc    Create Cashfree order
