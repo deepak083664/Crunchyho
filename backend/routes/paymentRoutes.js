@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+dotenv.config({ path: path.join(path.resolve(), '.env') });
 import { Cashfree, CFEnvironment } from 'cashfree-pg';
 import Order from '../models/Order.js';
 
@@ -143,6 +144,16 @@ router.post('/webhook', async (req, res) => {
         console.error("Webhook Error:", error.message);
         res.status(500).json({ message: 'Webhook Error', error: error.message });
     }
+});
+
+// Diagnostic route to check if ENV variables are loaded (returns only keys for security)
+router.get('/debug-env', (req, res) => {
+    const keys = Object.keys(process.env);
+    res.json({
+        hasBackendUrl: !!process.env.BACKEND_URL,
+        allKeys: keys.filter(k => k.includes('URL') || k.includes('CASHFREE')),
+        status: "Checked"
+    });
 });
 
 export default router;
