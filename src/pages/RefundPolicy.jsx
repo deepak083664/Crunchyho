@@ -39,7 +39,7 @@ export default function RefundPolicy() {
 
                 <h3 className="mb-3" style={{ color: 'var(--text-primary)' }}>4. Refund Processing Time</h3>
                 <p className="mb-2">If a refund is approved, it will be processed within 5–7 business days.</p>
-                <p className="mb-6">All refunds will be issued through the original payment method used during checkout, which is processed securely via Razorpay payment gateway.</p>
+                <p className="mb-6">All refunds will be issued through the original payment method used during checkout, which is processed securely via Cashfree payment gateway.</p>
 
                 <h3 className="mb-3" style={{ color: 'var(--text-primary)' }}>5. Order Issues and Support</h3>
                 <p className="mb-6">If you face any issues with your order, please contact us immediately. Our team will review the situation and try to resolve the issue as quickly as possible.</p>

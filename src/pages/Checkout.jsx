@@ -18,17 +18,9 @@ export default function Checkout() {
     });
 
     const [paymentMethod, setPaymentMethod] = useState('COD');
-
-    // Script loading mechanism for Razorpay
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-        script.async = true;
-        document.body.appendChild(script);
-    }, []);
+    const [loading, setLoading] = useState(false);
 
     if (cart.length === 0) {
-        // Use a slight delay to allow alert/navigation to settle if coming from a success
         const timer = setTimeout(() => {
             if (window.location.pathname === '/checkout') {
                 navigate('/cart');
@@ -57,8 +49,9 @@ export default function Checkout() {
 
     const handleCheckout = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
-        // Prepare order payload
+        // Prepare order items
         const orderItems = cart.map(item => ({
             name: item.name,
             qty: item.quantity,
@@ -70,71 +63,82 @@ export default function Checkout() {
         const orderData = {
             orderItems,
             user: shipping,
-            paymentMethod,
+            paymentMethod: paymentMethod === 'Online' ? 'Cashfree' : 'COD',
             totalAmount: cartTotal
         };
 
         if (paymentMethod === 'COD') {
             const result = await placeOrderBackend(orderData);
             if (result) {
-                // Remove alert to make it an automatic, seamless transition
                 clearCart();
                 navigate('/order-success', { state: { order: result } });
             }
-        } else if (paymentMethod === 'Razorpay') {
+            setLoading(false);
+        } else if (paymentMethod === 'Online') {
             try {
-                // Create Razorpay Order first
-                const rzOrderRes = await fetch(`${import.meta.env.VITE_API_URL}/api/payment/create-order`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount: cartTotal, receipt: `rcpt_${Date.now()}` })
-                });
-                const rzOrder = await rzOrderRes.json();
-
-                const options = {
-                    key: "rzp_live_SNUbcQkRDNQr3T", // Standard usage, though should be env var
-                    amount: rzOrder.amount,
-                    currency: rzOrder.currency,
-                    name: "CrunchyHo",
-                    description: "Premium Purchase",
-                    order_id: rzOrder.id,
-                    handler: async function (response) {
-                        const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/api/payment/verify`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                razorpayOrderId: response.razorpay_order_id,
-                                razorpayPaymentId: response.razorpay_payment_id,
-                                signature: response.razorpay_signature,
-                            })
-                        });
-                        const verified = await verifyRes.json();
-                        if (verified.success) {
-                            // Provide success information for Razorpay as well
-                            clearCart();
-                            // We simulate the order object or pass verified.order if returned, 
-                            // but typically Razorpay verifies the order and we fetch state or just pass generic data
-                            navigate('/order-success', { state: { order: { ...orderData, _id: rzOrder.id, paymentMethod: 'Razorpay' } } });
-                        } else {
-                            alert("Payment Verification Failed!");
-                        }
-                    },
-                    prefill: {
-                        name: shipping.fullName,
-                        email: shipping.email,
-                        contact: shipping.phone
-                    },
-                    theme: { color: "#0f172a" }
+                // 1. Prepare and validate payload
+                const payload = {
+                    amount: Number(cartTotal),
+                    customer_details: {
+                        customer_phone: shipping.phone.trim(),
+                        customer_email: shipping.email.trim(),
+                        customer_name: shipping.fullName.trim(),
+                        customer_id: shipping.phone.trim() // Using phone as unique ID
+                    }
                 };
 
-                const rzp1 = new window.Razorpay(options);
-                rzp1.open();
+                console.log("FRONTEND Payment Payload:", payload);
 
-                // Save order as pending in backend, but don't navigate yet since handler handles it
-                await placeOrderBackend(orderData);
+                // Validation checks
+                if (isNaN(payload.amount) || payload.amount <= 0) {
+                    alert("Invalid cart total. Please refresh.");
+                    setLoading(false);
+                    return;
+                }
+
+                const phoneRegex = /^[0-9]{10}$/;
+                if (!phoneRegex.test(payload.customer_details.customer_phone)) {
+                    alert("Please enter a valid 10-digit phone number.");
+                    setLoading(false);
+                    return;
+                }
+
+                if (!payload.customer_details.customer_email || !payload.customer_details.customer_email.includes('@')) {
+                    alert("Please enter a valid email address.");
+                    setLoading(false);
+                    return;
+                }
+
+                // 2. Create Order in Backend to get payment session ID
+                const cfOrderRes = await fetch(`${import.meta.env.VITE_API_URL}/api/payment/create-order`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await cfOrderRes.json();
+                
+                console.log("Backend Response:", data);
+
+                if (!data.payment_link) {
+                    console.log("Full Backend Error:", data.error);
+                    alert(JSON.stringify(data.error));
+                    throw new Error(data.message || data.error?.message || "Failed to create payment link");
+                }
+
+                // 3. Save order as pending in backend before redirecting
+                await placeOrderBackend({
+                    ...orderData,
+                    cfOrderId: data.order_id
+                });
+
+                // 4. Redirect to Cashfree Payment Page
+                window.location.href = data.payment_link;
+
             } catch (error) {
                 console.error("Payment initiation failed", error);
-                alert("Payment initiation failed");
+                alert("Payment initiation failed: " + error.message);
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -182,15 +186,15 @@ export default function Checkout() {
 
                         <h3 className="mt-4">Payment Method</h3>
                         <div className="payment-options">
-                            <label className={`payment-option ${paymentMethod === 'Razorpay' ? 'selected' : ''}`}>
+                            <label className={`payment-option ${paymentMethod === 'Online' ? 'selected' : ''}`}>
                                 <input
                                     type="radio"
                                     name="payment"
-                                    value="Razorpay"
-                                    checked={paymentMethod === 'Razorpay'}
+                                    value="Online"
+                                    checked={paymentMethod === 'Online'}
                                     onChange={(e) => setPaymentMethod(e.target.value)}
                                 />
-                                Pay Online (Razorpay)
+                                Pay Online (Cashfree)
                             </label>
                             <label className={`payment-option ${paymentMethod === 'COD' ? 'selected' : ''}`}>
                                 <input
@@ -204,8 +208,8 @@ export default function Checkout() {
                             </label>
                         </div>
 
-                        <button type="submit" className="btn-primary w-full mt-4 p-lg">
-                            {paymentMethod === 'COD' ? 'Place Order' : `Pay ₹${cartTotal.toFixed(2)}`}
+                        <button type="submit" className="btn-primary w-full mt-4 p-lg" disabled={loading}>
+                            {loading ? 'Processing...' : (paymentMethod === 'COD' ? 'Place Order' : `Pay ₹${cartTotal.toFixed(2)}`)}
                         </button>
                     </form>
                 </div>

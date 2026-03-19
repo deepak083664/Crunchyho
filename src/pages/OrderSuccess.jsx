@@ -151,7 +151,7 @@ export default function OrderSuccess() {
                             <span>Payment Method</span>
                             <span className="badge badge-gray">{orderData.paymentMethod || 'COD'}</span>
                         </div>
-                        {orderData.paymentMethod === 'Razorpay' && (
+                        {orderData.paymentMethod === 'Cashfree' && (
                             <div className="bill-summary-row">
                                 <span>Status</span>
                                 <span className="badge badge-green">Paid</span>

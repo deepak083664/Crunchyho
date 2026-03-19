@@ -30,7 +30,7 @@ const orderSchema = new mongoose.Schema({
     paymentMethod: {
         type: String,
         required: true,
-        enum: ['Razorpay', 'COD'],
+        enum: ['Cashfree', 'COD'],
         default: 'COD'
     },
     paymentStatus: {
@@ -39,10 +39,10 @@ const orderSchema = new mongoose.Schema({
         enum: ['Pending', 'Completed', 'Failed'],
         default: 'Pending'
     },
-    razorpayOrderId: {
+    cfOrderId: {
         type: String
     },
-    razorpayPaymentId: {
+    cfPaymentId: {
         type: String
     },
     orderStatus: {
