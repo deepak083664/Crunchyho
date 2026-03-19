@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { Instagram, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
@@ -14,10 +14,8 @@ export default function Footer() {
                         </Link>
                         <p className="text-muted">A delicious and addictive snack – once you start eating Crunchyho, it’s hard to stop.</p>
                         <div className="social-links">
-                            <a href="#" aria-label="Facebook"><Facebook size={20} /></a>
-                            <a href="#" aria-label="Twitter"><Twitter size={20} /></a>
-                            <a href="#" aria-label="Instagram"><Instagram size={20} /></a>
-                            <a href="#" aria-label="Youtube"><Youtube size={20} /></a>
+                            <a href="https://www.instagram.com/crunchy_ho?igsh=Njd2ZDNybDNqem44" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram size={20} /></a>
+                            <a href="https://www.youtube.com/@Crunchyho" target="_blank" rel="noopener noreferrer" aria-label="Youtube"><Youtube size={20} /></a>
                         </div>
                     </div>
 
