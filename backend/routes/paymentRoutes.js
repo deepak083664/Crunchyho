@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
 import { Cashfree, CFEnvironment } from 'cashfree-pg';
 import Order from '../models/Order.js';
 
@@ -31,6 +32,7 @@ const cashfree = new Cashfree(
 // @desc    Create Cashfree order
 // @route   POST /api/payment/create-order
 router.post('/create-order', async (req, res) => {
+    console.log("DEBUG: BACKEND_URL is:", process.env.BACKEND_URL);
     try {
         const { amount, customer_details, order_meta } = req.body;
 
