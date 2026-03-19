@@ -61,8 +61,8 @@ router.post('/create-order', async (req, res) => {
         };
 
         // 3. URL Validation for Production
-        let returnUrl = order_meta?.return_url || `${process.env.FRONTEND_URL}/order-success?order_id={order_id}`;
-        let notifyUrl = order_meta?.notify_url || `${process.env.BACKEND_URL}/api/payment/webhook`;
+        let returnUrl = order_meta?.return_url || `${process.env.FRONTEND_URL || 'https://crunchyho.in'}/order-success?order_id={order_id}`;
+        let notifyUrl = order_meta?.notify_url || `${process.env.BACKEND_URL || 'https://api.crunchyho.in'}/api/payment/webhook`;
 
         if (process.env.CASHFREE_MODE === 'PRODUCTION') {
             if (returnUrl.includes('localhost') || notifyUrl.includes('localhost')) {
