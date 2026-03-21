@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
+import { load } from '@cashfreepayments/cashfree-js';
 import './Checkout.css';
 
 export default function Checkout() {
@@ -119,10 +120,10 @@ export default function Checkout() {
                 
                 console.log("Backend Response:", data);
 
-                if (!data.payment_link) {
-                    console.log("Full Backend Error:", data.error);
-                    alert(JSON.stringify(data.error));
-                    throw new Error(data.message || data.error?.message || "Failed to create payment link");
+                if (!data.payment_session_id) {
+                    console.log("Full Backend Error Data:", data);
+                    alert("Critical Debug Info: " + JSON.stringify(data.debugData || data.error || data));
+                    throw new Error(data.message || "Failed to create payment session");
                 }
 
                 // 3. Save order as pending in backend before redirecting
@@ -132,7 +133,13 @@ export default function Checkout() {
                 });
 
                 // 4. Redirect to Cashfree Payment Page
-                window.location.href = data.payment_link;
+                const cashfree = await load({
+                    mode: "production" // Use production for live, sandbox for test
+                });
+                cashfree.checkout({
+                    paymentSessionId: data.payment_session_id,
+                    redirectTarget: "_self"
+                });
 
             } catch (error) {
                 console.error("Payment initiation failed", error);
