@@ -31,7 +31,14 @@ export default function Checkout() {
     }
 
     const handleChange = (e) => {
-        setShipping({ ...shipping, [e.target.name]: e.target.value });
+        if (e.target.name === 'phone') {
+            const value = e.target.value;
+            if (value !== '' && !/^\d*$/.test(value)) return;
+            if (value.length > 10) return;
+            setShipping({ ...shipping, [e.target.name]: value });
+        } else {
+            setShipping({ ...shipping, [e.target.name]: e.target.value });
+        }
     };
 
     const placeOrderBackend = async (orderData) => {
@@ -50,6 +57,13 @@ export default function Checkout() {
 
     const handleCheckout = async (e) => {
         e.preventDefault();
+
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(shipping.phone.trim())) {
+            alert("Please enter a valid 10-digit phone number.");
+            return;
+        }
+
         setLoading(true);
 
         // Prepare order items
@@ -93,13 +107,6 @@ export default function Checkout() {
                 // Validation checks
                 if (isNaN(payload.amount) || payload.amount <= 0) {
                     alert("Invalid cart total. Please refresh.");
-                    setLoading(false);
-                    return;
-                }
-
-                const phoneRegex = /^[0-9]{10}$/;
-                if (!phoneRegex.test(payload.customer_details.customer_phone)) {
-                    alert("Please enter a valid 10-digit phone number.");
                     setLoading(false);
                     return;
                 }
@@ -169,7 +176,7 @@ export default function Checkout() {
                             </div>
                             <div className="form-group">
                                 <label>Phone Number</label>
-                                <input type="tel" name="phone" required value={shipping.phone} onChange={handleChange} />
+                                <input type="tel" name="phone" required maxLength="10" minLength="10" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" value={shipping.phone} onChange={handleChange} />
                             </div>
                         </div>
                         <div className="form-group">

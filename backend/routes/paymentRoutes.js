@@ -62,7 +62,7 @@ router.post('/create-order', async (req, res) => {
 
         // 3. URL Validation for Production
         let returnUrl = order_meta?.return_url || `${process.env.FRONTEND_URL || 'https://crunchyho.in'}/order-success?order_id={order_id}`;
-        let notifyUrl = order_meta?.notify_url || `${process.env.BACKEND_URL || 'https://api.crunchyho.in'}/api/payment/webhook`;
+        let notifyUrl = order_meta?.notify_url || `${process.env.BACKEND_URL || 'https://crunchyho-3kbk.onrender.com'}/api/payment/webhook`;
 
         if (process.env.CASHFREE_MODE === 'PRODUCTION') {
             if (returnUrl.includes('localhost')) {
@@ -70,8 +70,8 @@ router.post('/create-order', async (req, res) => {
                 console.warn("WARNING: Cashfree PRODUCTION mode does not support localhost URLs. Automatically changed return_url to https://crunchyho.in");
             }
             if (notifyUrl.includes('localhost')) {
-                 notifyUrl = notifyUrl.replace(/http:\/\/localhost:\d+/, 'https://api.crunchyho.in');
-                 console.warn("WARNING: Automatically changed notify_url to https://api.crunchyho.in");
+                 notifyUrl = notifyUrl.replace(/http:\/\/localhost:\d+/, 'https://crunchyho-3kbk.onrender.com');
+                 console.warn("WARNING: Automatically changed notify_url to https://crunchyho-3kbk.onrender.com");
             }
         }
 
